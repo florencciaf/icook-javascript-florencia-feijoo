@@ -199,7 +199,7 @@ body {
     transition: var(--mainTransition);
     background: rgb(250, 75, 116, 0.4);
     z-index: 2;
-    /* visibility: hidden; */
+    visibility: hidden;
 }
 
 .cart {
@@ -213,14 +213,14 @@ body {
     background: var(--mainWhite);
     padding: 1.5rem;
     transition: var(--mainTransition);
-    /* transform: translateX(100%); */
+    transform: translateX(100%);
 }
 
-.showCart {
+.show-cart {
     transform: translateX(0);
 }
 
-.transparentBcg {
+.transparent-bcg {
     visibility: visible;
 }
 
