@@ -9,6 +9,9 @@ const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
 const productsDOM = document.querySelector(".products-center");
 
+//buttons 
+let buttonsDOM = [];
+
 //cart
 let cart = [];
 
@@ -31,7 +34,7 @@ const addCartItem = item => {
     <div>
         <h4>${item.title}</h4>
         <h5>${item.price} USD</h5>
-        <span class="remove-item" data-id=${item.id}>Remove</span>
+        <span class="remove-item" data-id=${item.id}>Eliminar</span>
     </div>
     <div>
         <i class="fas fa-chevron-up" data-id=${item.id}></i>
@@ -40,7 +43,6 @@ const addCartItem = item => {
     </div>
     `;
     cartContent.appendChild(div);
-    console.log(cartContent);
 }
 
 const showCart = () => {
@@ -51,6 +53,29 @@ const showCart = () => {
 const hideCart = () => {
     cartOverlay.classList.remove("transparent-bcg");
     cartDOM.classList.remove("show-cart");
+}
+
+const clearCart = () => {
+    let cartItems = cart.map(item => item.id);
+    cartItems.forEach(id => removeItem(id));
+    console.log(cartContent.children);
+    while (cartContent.children.length > 0) {
+        cartContent.removeChild(cartContent.children[0]);
+    }
+    hideCart();
+}
+
+const removeItem = (id) => {
+    cart = cart.filter(item => item.id != id);
+    setCartValues(cart);
+    saveCart(cart);
+    let button = getSingleButton(id);
+    button.disabled = false;
+    button.innerHTML = `<i class="fas fa-shopping-cart"></i>Agregar al carrito`;
+}
+
+const getSingleButton = id => {
+    return buttonsDOM.find(button => button.dataset.id == id);
 }
 
 const setupAPP = () => {
@@ -79,6 +104,10 @@ localStorage.setItem("productsList", JSON.stringify(productsList));
 
 const products = JSON.parse(localStorage.getItem("productsList"));
 
+const saveCart = cart => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 const getCart = () => {
     return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
 }
@@ -106,6 +135,8 @@ setupAPP();
 
 const bagButtons = [...document.querySelectorAll(".bag-btn")];
 
+buttonsDOM = bagButtons; 
+
 bagButtons.forEach(btn => {
     let id = btn.dataset.id;
     let inCart = cart.find(product => product.id == id);
@@ -121,7 +152,7 @@ bagButtons.forEach(btn => {
         //add product to cart
         cart = [...cart, cartItem];
         //save cart in local storage
-        localStorage.setItem("cart", JSON.stringify(cart));
+        saveCart(cart);
         //set cart values
         setCartValues(cart);
         //display cart item
@@ -129,4 +160,38 @@ bagButtons.forEach(btn => {
         //show cart
         showCart();
     });
+});
+
+//clear cart
+clearCartBtn.addEventListener("click", clearCart);
+
+//cart functionality
+cartContent.addEventListener("click", e => {
+    if (e.target.classList.contains("remove-item")) {
+        let removeCartItem = e.target;
+        let id = removeCartItem.dataset.id;
+        cartContent.removeChild(removeCartItem.parentElement.parentElement);
+        removeItem(id);
+    } else if (e.target.classList.contains("fa-chevron-up")) {
+        let addAmount = e.target;
+        let id = addAmount.dataset.id; 
+        let tempItem = cart.find(item => item.id == id);
+        tempItem.amount += 1; 
+        saveCart(cart);
+        setCartValues(cart);
+        addAmount.nextElementSibling.innerText = tempItem.amount;
+    } else if (e.target.classList.contains("fa-chevron-down")) {
+        let lowerAmount = e.target;
+        let id = lowerAmount.dataset.id; 
+        let tempItem = cart.find(item => item.id == id);
+        tempItem.amount -= 1; 
+        if (tempItem.amount > 0) {
+            saveCart(cart);
+            setCartValues(cart);
+            lowerAmount.previousElementSibling.innerText = tempItem.amount;
+        } else {
+            cartContent.removeChild(lowerAmount.parentElement.parentElement);
+            removeItem(id);
+        }
+    }
 });
