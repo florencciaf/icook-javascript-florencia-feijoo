@@ -37,9 +37,9 @@ const addCartItem = item => {
         <span class="remove-item" data-id=${item.id}>Eliminar</span>
     </div>
     <div>
-        <i class="fas fa-chevron-up" data-id=${item.id}></i>
+        <i class="fa-solid fa-chevron-up" data-id=${item.id}></i>
         <p class="item-amount">${item.amount}</p>
-        <i class="fas fa-chevron-down" data-id=${item.id}></i>
+        <i class="fa-solid fa-chevron-down" data-id=${item.id}></i>
     </div>
     `;
     cartContent.appendChild(div);
@@ -70,7 +70,7 @@ const removeItem = id => {
     saveCart(cart);
     let button = getSingleButton(id);
     button.disabled = false;
-    button.innerHTML = `<i class="fas fa-shopping-cart"></i>Agregar al carrito`;
+    button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>Agregar al carrito`;
 }
 
 const getSingleButton = id => {
