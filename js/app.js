@@ -58,14 +58,13 @@ const hideCart = () => {
 const clearCart = () => {
     let cartItems = cart.map(item => item.id);
     cartItems.forEach(id => removeItem(id));
-    console.log(cartContent.children);
     while (cartContent.children.length > 0) {
         cartContent.removeChild(cartContent.children[0]);
     }
     hideCart();
 }
 
-const removeItem = (id) => {
+const removeItem = id => {
     cart = cart.filter(item => item.id != id);
     setCartValues(cart);
     saveCart(cart);
@@ -163,7 +162,29 @@ bagButtons.forEach(btn => {
 });
 
 //clear cart
-clearCartBtn.addEventListener("click", clearCart);
+clearCartBtn.addEventListener("click", () => {
+    swal({
+        title: "¿Estás seguro que querés vaciar tu carrito?",
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true
+            },
+            confirm: {
+                text: "Sí, estoy seguro",
+                value: true,
+                visible: true,
+                closeModal: true
+            }
+          }
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            clearCart();
+        }
+      });
+});
 
 //cart functionality
 cartContent.addEventListener("click", e => {
@@ -176,7 +197,7 @@ cartContent.addEventListener("click", e => {
         let addAmount = e.target;
         let id = addAmount.dataset.id; 
         let tempItem = cart.find(item => item.id == id);
-        tempItem.amount += 1; 
+        tempItem.amount++; 
         saveCart(cart);
         setCartValues(cart);
         addAmount.nextElementSibling.innerText = tempItem.amount;
@@ -184,7 +205,7 @@ cartContent.addEventListener("click", e => {
         let lowerAmount = e.target;
         let id = lowerAmount.dataset.id; 
         let tempItem = cart.find(item => item.id == id);
-        tempItem.amount -= 1; 
+        tempItem.amount--; 
         if (tempItem.amount > 0) {
             saveCart(cart);
             setCartValues(cart);
