@@ -22,7 +22,7 @@ body {
     font-weight: 400;
 }
 
-/* --------------- Navbar ---------------- */
+/* ---------------- Navbar ---------------- */
 .navbar {
     position: sticky;
     top: 0;
@@ -62,9 +62,9 @@ body {
     border-radius: 30%;
     color: var(--mainWhite);
 }
-/* --------------- End of Navbar ---------------- */
+/* ---------------- End of Navbar ---------------- */
 
-/* --------------- Hero ---------------- */
+/* ---------------- Hero ---------------- */
 .hero {
     min-height: calc(100vh - 60px);
     background: url("../images/hero-bcg.jpg") center/cover no-repeat;
@@ -103,9 +103,9 @@ body {
     background: transparent;
     color: var(--primaryColor);
 }
-/* --------------- End of Hero ---------------- */
+/* ---------------- End of Hero ---------------- */
 
-/* --------------- Products ---------------- */
+/* ---------------- Products ---------------- */
 .products {
     padding: 4rem 0;
 }
@@ -154,10 +154,6 @@ body {
     color: var(--primaryColor);
 }
 
-.fa-shopping-cart {
-    margin-right: 0.5rem;
-}
-
 .img-container:hover .bag-btn {
     transform: translateX(0);
 }
@@ -187,9 +183,9 @@ body {
     color: var(--primaryColor);
     text-align: center;
 }
-/* --------------- End of Products ---------------- */
+/* ---------------- End of Products ---------------- */
 
-/* --------------- Cart ---------------- */
+/* ---------------- Cart ---------------- */
 .cart-overlay {
     position: fixed;
     top: 0;
@@ -243,7 +239,7 @@ body {
     margin-bottom: 2rem;
 }
 
-/*---------- Cart Item -------------------- */
+/* ---------------- Cart Item ---------------- */
 .cart-item {
     display: grid;
     align-items: center;
@@ -282,21 +278,25 @@ body {
     color: var(--primaryColor);
     cursor: pointer;
 }
-/*---------- End of Cart Item -------------------- */
+/* ---------------- End of Cart Item ---------------- */
 
-.cart-footer {
+.cart-footer,
+.empty-cart-footer {
     margin-top: 2rem;
     letter-spacing: var(--mainSpacing);
     text-align: center;
 }
 
 .cart-footer h3 {
-    text-transform: capitalize;
     margin-bottom: 1rem;
 }
-/* --------------- End of Cart ---------------- */
 
-/* --------------- Sweetalert ---------------- */
+.empty-cart-icon {
+    width: 50px;
+}
+/* ---------------- End of Cart ---------------- */
+
+/* ---------------- Sweetalert ---------------- */
 .swal-modal {
     padding: 1rem;
 }
@@ -333,4 +333,4 @@ body {
     color: var(--mainWhite);
     box-shadow: none !important;
 } 
-/* --------------- End of Sweetalert ---------------- */
+/* ---------------- End of Sweetalert ---------------- */

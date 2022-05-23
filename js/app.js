@@ -7,6 +7,8 @@ const cartOverlay = document.querySelector(".cart-overlay");
 const cartItems = document.querySelector(".cart-items");
 const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
+const cartFooterDOM = document.querySelector(".cart-footer");
+const emptyCartFooterDOM = document.querySelector(".empty-cart-footer");
 const productsDOM = document.querySelector(".products-center");
 
 //buttons 
@@ -24,6 +26,13 @@ const setCartValues = cart => {
     });
     cartTotal.innerText = tempTotal;
     cartItems.innerText = itemsTotal;
+    if (cart.length <= 0) {
+        emptyCartFooterDOM.style.display = "block";
+        cartFooterDOM.style.display = "none";
+    } else {
+        emptyCartFooterDOM.style.display = "none";
+        cartFooterDOM.style.display = "block";
+    }
 }
 
 const addCartItem = item => {
@@ -70,7 +79,7 @@ const removeItem = id => {
     saveCart(cart);
     let button = getSingleButton(id);
     button.disabled = false;
-    button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>Agregar al carrito`;
+    button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Agregar al carrito`;
 }
 
 const getSingleButton = id => {
@@ -119,7 +128,7 @@ for (const product of products) {
     <div class="img-container">
         <img src=${product.image} alt="Producto" class="product-img">
         <button class="bag-btn" data-id=${product.id}>
-            <i class="fas fa-shopping-cart"></i>
+            <i class="fa-solid fa-cart-shopping"></i>
             Agregar al carrito
         </button>
     </div>
@@ -178,12 +187,10 @@ clearCartBtn.addEventListener("click", () => {
                 closeModal: true
             }
           }
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-            clearCart();
-        }
-      });
+    })
+    .then((willDelete) => {
+        willDelete && clearCart();
+    });
 });
 
 //cart functionality
