@@ -11,11 +11,72 @@ const cartFooterDOM = document.querySelector(".cart-footer");
 const emptyCartFooterDOM = document.querySelector(".empty-cart-footer");
 const productsDOM = document.querySelector(".products-center");
 
+//cart
+let cart = [];
+
 //buttons 
 let buttonsDOM = [];
 
-//cart
-let cart = [];
+//products
+const getProducts = async () => {
+    try {
+        let response = await fetch("js/products.json");
+        let data = await response.json();
+        let products = data;
+        return products;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//UI
+const displayProducts = products => {
+    for (const product of products) {
+        let displayProducts = document.createElement("article");
+        displayProducts.className = "product";
+        displayProducts.innerHTML = `
+        <div class="img-container">
+            <img src=${product.image} alt="Producto" class="product-img">
+            <button class="bag-btn" data-id=${product.id}>
+                <i class="fa-solid fa-cart-shopping"></i>
+                Agregar al carrito
+            </button>
+        </div>
+        <h3>${product.title}</h3>
+        <h4>${product.price} USD</h4>
+        `;
+        productsDOM.appendChild(displayProducts);
+    }
+}
+
+const getButtons = () => {
+    const buttons = [...document.querySelectorAll(".bag-btn")];
+    buttonsDOM = buttons; 
+    buttons.forEach(btn => {
+        let id = btn.dataset.id;
+        let inCart = cart.find(product => product.id == id);
+        if (inCart) {
+            btn.innerText = "Agregado";
+            btn.disabled = true;
+        } 
+        btn.addEventListener("click", e => {
+            e.target.innerText = "Agregado";
+            e.target.disabled = true;
+            //get product from products
+            let cartItem = {...getProduct(id), amount: 1}; 
+            //add product to cart
+            cart = [...cart, cartItem];
+            //save cart in local storage
+            saveCart(cart);
+            //set cart values
+            setCartValues(cart);
+            //display cart item
+            addCartItem(cartItem);
+            //show cart
+            showCart();
+        });
+    });
+}
 
 const setCartValues = cart => {
     let tempTotal = 0;
@@ -59,9 +120,77 @@ const showCart = () => {
     cartDOM.classList.add("show-cart");
 }
 
+const setupAPP = () => {
+    cart = getCart();
+    setCartValues(cart);
+    populateCart(cart);
+    cartBtn.addEventListener("click", showCart);
+    closeCartBtn.addEventListener("click", hideCart);
+}
+
+const populateCart = cart => {
+    cart.forEach(item => addCartItem(item));
+}
+
 const hideCart = () => {
     cartOverlay.classList.remove("transparent-bcg");
     cartDOM.classList.remove("show-cart");
+}
+
+const cartLogic = () => {
+    //clear cart
+    clearCartBtn.addEventListener("click", () => {
+        swal({
+            title: "¿Estás seguro que querés vaciar tu carrito?",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true
+                },
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                }
+              }
+        })
+        .then((willDelete) => {
+            willDelete && clearCart();
+        });
+    });
+
+    //cart functionality
+    cartContent.addEventListener("click", e => {
+        if (e.target.classList.contains("remove-item")) {
+            let removeCartItem = e.target;
+            let id = removeCartItem.dataset.id;
+            cartContent.removeChild(removeCartItem.parentElement.parentElement);
+            removeItem(id);
+        } else if (e.target.classList.contains("fa-chevron-up")) {
+            let addAmount = e.target;
+            let id = addAmount.dataset.id; 
+            let tempItem = cart.find(item => item.id == id);
+            tempItem.amount++; 
+            saveCart(cart);
+            setCartValues(cart);
+            addAmount.nextElementSibling.innerText = tempItem.amount;
+        } else if (e.target.classList.contains("fa-chevron-down")) {
+            let lowerAmount = e.target;
+            let id = lowerAmount.dataset.id; 
+            let tempItem = cart.find(item => item.id == id);
+            tempItem.amount--; 
+            if (tempItem.amount > 0) {
+                saveCart(cart);
+                setCartValues(cart);
+                lowerAmount.previousElementSibling.innerText = tempItem.amount;
+            } else {
+                cartContent.removeChild(lowerAmount.parentElement.parentElement);
+                removeItem(id);
+            }
+        }
+    });
 }
 
 const clearCart = () => {
@@ -86,31 +215,15 @@ const getSingleButton = id => {
     return buttonsDOM.find(button => button.dataset.id == id);
 }
 
-const setupAPP = () => {
-    cart = getCart();
-    setCartValues(cart);
-    populateCart(cart);
-    cartBtn.addEventListener("click", showCart);
-    closeCartBtn.addEventListener("click", hideCart);
+//localstorage
+const saveProducts = products => {
+    localStorage.setItem("products", JSON.stringify(products));
 }
 
-const populateCart = cart => {
-    cart.forEach(item => addCartItem(item));
+const getProduct = id => {
+    products = JSON.parse(localStorage.getItem("products"));
+    return products.find(product => product.id == id);
 }
-
-//local storage
-const productsList =   [{id: 1, title: "Sushi salad", price: 8, image: "images/product-1.jpg"},
-                        {id: 2, title: "Pasta", price: 4, image: "images/product-2.jpg"},
-                        {id: 3, title: "Sopa", price: 4, image: "images/product-3.jpg"},
-                        {id: 4, title: "Avocado toast", price: 6, image: "images/product-4.jpg"},
-                        {id: 5, title: "Paella", price: 8, image: "images/product-5.jpg"},
-                        {id: 6, title: "Salmón rosado", price: 8, image: "images/product-6.jpg"},
-                        {id: 7, title: "Ensalada", price: 6, image: "images/product-7.jpg"},
-                        {id: 8, title: "Pizza", price: 6, image: "images/product-8.jpg"}];
-
-localStorage.setItem("productsList", JSON.stringify(productsList));
-
-const products = JSON.parse(localStorage.getItem("productsList"));
 
 const saveCart = cart => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -120,106 +233,14 @@ const getCart = () => {
     return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
 }
 
-//display products
-for (const product of products) {
-    let displayProducts = document.createElement("article");
-    displayProducts.className = "product";
-    displayProducts.innerHTML = `
-    <div class="img-container">
-        <img src=${product.image} alt="Producto" class="product-img">
-        <button class="bag-btn" data-id=${product.id}>
-            <i class="fa-solid fa-cart-shopping"></i>
-            Agregar al carrito
-        </button>
-    </div>
-    <h3>${product.title}</h3>
-    <h4>${product.price} USD</h4>
-    `;
-    productsDOM.appendChild(displayProducts);
-}
-
-//add to cart
+//setup app
 setupAPP();
 
-const bagButtons = [...document.querySelectorAll(".bag-btn")];
-
-buttonsDOM = bagButtons; 
-
-bagButtons.forEach(btn => {
-    let id = btn.dataset.id;
-    let inCart = cart.find(product => product.id == id);
-    if (inCart) {
-        btn.innerText = "Agregado";
-        btn.disabled = true;
-    } 
-    btn.addEventListener("click", e => {
-        e.target.innerText = "Agregado";
-        e.target.disabled = true;
-        //get product from products
-        let cartItem = {...products.find(product => product.id == id), amount: 1}; 
-        //add product to cart
-        cart = [...cart, cartItem];
-        //save cart in local storage
-        saveCart(cart);
-        //set cart values
-        setCartValues(cart);
-        //display cart item
-        addCartItem(cartItem);
-        //show cart
-        showCart();
-    });
-});
-
-//clear cart
-clearCartBtn.addEventListener("click", () => {
-    swal({
-        title: "¿Estás seguro que querés vaciar tu carrito?",
-        buttons: {
-            cancel: {
-                text: "Cancelar",
-                value: false,
-                visible: true
-            },
-            confirm: {
-                text: "Sí, estoy seguro",
-                value: true,
-                visible: true,
-                closeModal: true
-            }
-          }
-    })
-    .then((willDelete) => {
-        willDelete && clearCart();
-    });
-});
-
-//cart functionality
-cartContent.addEventListener("click", e => {
-    if (e.target.classList.contains("remove-item")) {
-        let removeCartItem = e.target;
-        let id = removeCartItem.dataset.id;
-        cartContent.removeChild(removeCartItem.parentElement.parentElement);
-        removeItem(id);
-    } else if (e.target.classList.contains("fa-chevron-up")) {
-        let addAmount = e.target;
-        let id = addAmount.dataset.id; 
-        let tempItem = cart.find(item => item.id == id);
-        tempItem.amount++; 
-        saveCart(cart);
-        setCartValues(cart);
-        addAmount.nextElementSibling.innerText = tempItem.amount;
-    } else if (e.target.classList.contains("fa-chevron-down")) {
-        let lowerAmount = e.target;
-        let id = lowerAmount.dataset.id; 
-        let tempItem = cart.find(item => item.id == id);
-        tempItem.amount--; 
-        if (tempItem.amount > 0) {
-            saveCart(cart);
-            setCartValues(cart);
-            lowerAmount.previousElementSibling.innerText = tempItem.amount;
-        } else {
-            cartContent.removeChild(lowerAmount.parentElement.parentElement);
-            removeItem(id);
-        }
-    }
+//get all products 
+getProducts().then(products => {
+    displayProducts(products);
+    saveProducts(products);
+}).then(() => {
+    getButtons();
+    cartLogic();
 });
