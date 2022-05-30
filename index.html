@@ -34,38 +34,43 @@
         </div>
     </header>
     <!-- end of hero -->
-    <!-- products -->
-    <section class="products">
-        <div class="section-title">
-            <a id="nuestrosplatos"></a>
-            <h2>Nuestros platos</h2>
-        </div>
-        <div class="products-center">
-            
-        </div>
-    </section>
-    <!-- end of products -->
-    <!-- cart -->
-    <div class="cart-overlay">
-        <div class="cart">
-            <span class="close-cart">
-                <i class="fa-solid fa-xmark"></i>
-            </span>
-            <h2>Tu carrito</h2>
-            <div class="cart-content">
+    <main>
+        <!-- products -->
+        <section class="products">
+            <div class="section-title">
+                <a id="nuestrosplatos"></a>
+                <h2>Nuestros platos</h2>
+            </div>
+            <div class="products-center">
+                
+            </div>
+        </section>
+        <!-- end of products -->
+        <!-- cart -->
+        <div class="cart-overlay">
+            <div class="cart">
+                <span class="close-cart">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+                <h2>Tu carrito</h2>
+                <div class="cart-content">
 
-            </div>
-            <div class="cart-footer">
-                <h3>Total: <span class="cart-total">0</span> USD</h3>
-                <button class="clear-cart banner-btn">Vaciar carrito</button>
-            </div>
-            <div class="empty-cart-footer">
-                <img src="images/shopping-cart-icon.png" alt="Ícono carrito vacío" class="empty-cart-icon">
-                <h3>Tu carrito está vacío</h3>
+                </div>
+                <div class="cart-footer">
+                    <h3>Total: <span class="cart-total">0</span> USD</h3>
+                    <div style="display: inline-flex">
+                        <button class="clear-cart banner-btn" style="margin-right: 16px">Vaciar carrito</button>
+                        <button class="banner-btn" onclick="location.href='pages/checkout.html'">Comprar</button>
+                    </div>
+                </div>
+                <div class="empty-cart-footer">
+                    <img src="images/shopping-cart-icon.png" alt="Ícono carrito vacío" class="empty-cart-icon">
+                    <h3>Tu carrito está vacío</h3>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- end of cart -->
+        <!-- end of cart -->
+    </main>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/app.js"></script>
 </body>

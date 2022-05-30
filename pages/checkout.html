@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/logo-icon.png">
+    <title>iCook - Servicio de mealkit delivery #1 en Argentina</title>
+    <meta name="description" content="iCook cuenta con un servicio de mealkit delivery que lleva a la puerta de tu casa una caja semanal con recetas e ingredientes particionados.">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/d78cb1c4f2.js" crossorigin="anonymous"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="navbar-center">
+            <img src="../images/logo.png" alt="Logo iCook" style="cursor: pointer" onclick="location.href='../index.html'">
+        </div>
+    </nav>
+    <!-- end of navbar -->
+    <main>
+        <div class="grid">
+            <h1 style="margin: 1.5rem 0">Finalizar compra</h1>
+        </div>
+        <form class="grid">
+            <div class="personal-info">
+                <h2 class="checkout-subtitle">Datos personales</h2>
+                <div>
+                    <label for="email">Correo*</label><br>
+                    <input type="email" name="email" required>
+                </div>
+                <div>
+                    <label for="name-lastname">Nombre y apellido*</label><br>
+                    <input type="text" name="name-lastname" required>
+                </div>
+                <div>
+                    <label for="dni">DNI*</label><br>
+                    <input type="tel" name="dni" placeholder="99999999" maxlength="8" required>
+                </div>
+                <div>
+                    <label for="prefix">Celular*</label><br>
+                    <div class="phone-number">
+                        <span style="margin-right: 0.5rem">0</span>
+                        <input type="tel" name="prefix" maxlength="4" style="width: 30%; margin-right: 0.5rem" required>
+                        <input type="tel" name="suffix" maxlength="10" required>
+                    </div>
+                </div>
+            </div>
+            <div class="shipping-info">
+                <h2 class="checkout-subtitle">Envío</h2>
+                <div>
+                    <label for="street">Calle*</label><br>
+                    <input type="text" name="street" required>
+                </div>
+                <div>
+                    <label for="number">Número*</label><br>
+                    <input type="text" name="number" required>
+                </div>
+                <div>
+                    <label for="door">Piso / Puerta</label><br>
+                    <input type="text" name="door" placeholder="Ej. 4A">
+                </div>
+            </div>
+            <div class="payment-method">
+                <h2 class="checkout-subtitle">Método de pago</h2>
+                <div>
+                    <input type="radio" name="payment" id="payment-cash" value="cash">
+                    <label for="payment-cash">Efectivo</label>
+                </div>
+                <div>
+                    <input type="radio" name="payment" id="payment-card" value="card">
+                    <label for="payment-card">Tarjeta</label>
+                </div>
+                <div class="card" style="margin-top: 0.75rem">
+
+                </div>
+            </div>
+            <div>
+                <h2 class="checkout-subtitle">Resumen de la compra</h2>
+                <div class="cart-info">
+
+                </div>
+                <button type="submit" class="banner-btn" id="submit">Comprar</button>
+            </div>
+        </form>
+    </main>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../js/checkout.js"></script>
+</body>
+</html>
