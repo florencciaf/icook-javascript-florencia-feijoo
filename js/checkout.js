@@ -1,7 +1,10 @@
+//variables
 const cashRadioBtn = document.querySelector("#payment-cash");
 const cardRadioBtn = document.querySelector("#payment-card");
 const cardDOM = document.querySelector(".card");
+const cartInfo = document.querySelector(".cart-info");
 
+//payment method
 cardRadioBtn.addEventListener("click", () => {
     if (cardRadioBtn.checked) {
         cardDOM.innerHTML = `
@@ -30,3 +33,28 @@ cashRadioBtn.addEventListener("click", () => {
         cardDOM.innerHTML = "";
     } 
 });
+
+
+//cart info
+let cartSummary = [];
+
+const getCartSummary = () => localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+
+cartSummary = getCartSummary();
+
+const displayCartSummary = cartSummary => {
+    for (const item of cartSummary) {
+        let div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+        <img src="${item.image}" alt="Producto">
+        <div>
+            <h4>${item.title}</h4>
+            <h5>${item.price} USD</h5>
+            <p>Cantidad: ${item.amount}</p>
+        </div>
+        `;
+        cartInfo.appendChild(div);
+    }
+}
+displayCartSummary(cartSummary);

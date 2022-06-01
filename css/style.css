@@ -22,7 +22,7 @@ body {
     font-weight: 400;
 }
 
-/* ---------------- Navbar ---------------- */
+/* ---------------- navbar ---------------- */
 .navbar {
     position: sticky;
     top: 0;
@@ -62,9 +62,9 @@ body {
     border-radius: 30%;
     color: var(--mainWhite);
 }
-/* ---------------- End of Navbar ---------------- */
+/* ---------------- end of navbar ---------------- */
 
-/* ---------------- Hero ---------------- */
+/* ---------------- hero ---------------- */
 .hero {
     min-height: calc(100vh - 60px);
     background: url("../images/hero-bcg.jpg") center/cover no-repeat;
@@ -88,7 +88,7 @@ body {
 }
 
 .banner-btn {
-    padding: 1rem 3rem;
+    padding: 1rem 2rem;
     text-transform: uppercase;
     letter-spacing: var(--mainSpacing);
     font-size: 1rem;
@@ -103,9 +103,9 @@ body {
     background: transparent;
     color: var(--primaryColor);
 }
-/* ---------------- End of Hero ---------------- */
+/* ---------------- end of hero ---------------- */
 
-/* ---------------- Products ---------------- */
+/* ---------------- products ---------------- */
 .products {
     padding: 4rem 0;
 }
@@ -183,9 +183,9 @@ body {
     color: var(--primaryColor);
     text-align: center;
 }
-/* ---------------- End of Products ---------------- */
+/* ---------------- end of products ---------------- */
 
-/* ---------------- Cart ---------------- */
+/* ---------------- cart ---------------- */
 .cart-overlay {
     position: fixed;
     top: 0;
@@ -224,7 +224,7 @@ body {
     .cart { 
         width: 30vw;
         min-width: 450px;
-  }
+    }
 }
 
 .close-cart {
@@ -239,7 +239,7 @@ body {
     margin-bottom: 2rem;
 }
 
-/* ---------------- Cart Item ---------------- */
+/* ---------------- cart item ---------------- */
 .cart-item {
     display: grid;
     align-items: center;
@@ -278,7 +278,7 @@ body {
     color: var(--primaryColor);
     cursor: pointer;
 }
-/* ---------------- End of Cart Item ---------------- */
+/* ---------------- end of cart item ---------------- */
 
 .cart-footer,
 .empty-cart-footer {
@@ -294,9 +294,17 @@ body {
 .empty-cart-icon {
     width: 50px;
 }
-/* ---------------- End of Cart ---------------- */
 
-/* ---------------- Sweetalert ---------------- */
+.checkout-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* ---------------- end of cart ---------------- */
+
+/* ----------------sweetalert ---------------- */
 .swal-modal {
     padding: 1rem;
 }
@@ -333,4 +341,4 @@ body {
     color: var(--mainWhite);
     box-shadow: none !important;
 } 
-/* ---------------- End of Sweetalert ---------------- */
+/* ---------------- end of sweetalert ---------------- */

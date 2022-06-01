@@ -20,7 +20,7 @@ let buttonsDOM = [];
 //products
 const getProducts = async () => {
     try {
-        let response = await fetch("js/products.json");
+        let response = await fetch("products.json");
         let data = await response.json();
         let products = data;
         return products;
@@ -120,7 +120,7 @@ const showCart = () => {
     cartDOM.classList.add("show-cart");
 }
 
-const setupAPP = () => {
+const setupApp = () => {
     cart = getCart();
     setCartValues(cart);
     populateCart(cart);
@@ -138,7 +138,7 @@ const hideCart = () => {
 }
 
 const cartLogic = () => {
-    //clear cart
+    //clear cart btn
     clearCartBtn.addEventListener("click", () => {
         swal({
             title: "¿Estás seguro que querés vaciar tu carrito?",
@@ -154,11 +154,8 @@ const cartLogic = () => {
                     visible: true,
                     closeModal: true
                 }
-              }
-        })
-        .then((willDelete) => {
-            willDelete && clearCart();
-        });
+            }
+        }).then(willDelete => willDelete && clearCart());
     });
 
     //cart functionality
@@ -211,9 +208,7 @@ const removeItem = id => {
     button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Agregar al carrito`;
 }
 
-const getSingleButton = id => {
-    return buttonsDOM.find(button => button.dataset.id == id);
-}
+const getSingleButton = id => buttonsDOM.find(button => button.dataset.id == id);
 
 //localstorage
 const saveProducts = products => {
@@ -229,12 +224,10 @@ const saveCart = cart => {
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-const getCart = () => {
-    return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-}
+const getCart = () => localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
 
 //setup app
-setupAPP();
+setupApp();
 
 //get all products 
 getProducts().then(products => {

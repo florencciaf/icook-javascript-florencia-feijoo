@@ -1,13 +1,4 @@
-.grid {
-    width: 90vw;
-    margin: 0 auto;
-    max-width: 1170px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    grid-column-gap: 2rem;
-    grid-row-gap: 2rem;
-}
-
+/* ---------------- form ---------------- */
 input[type=text], input[type=tel], input[type=email], input[type=month] {
     width: 100%;
     max-width: 100%;
@@ -39,3 +30,40 @@ input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[ty
     display: flex;
     align-items: center;
 }
+/* ---------------- end of ---------------- */
+
+/* ---------------- cart summary ---------------- */
+.form-layout {
+    width: 90vw;
+    margin: 0 auto;
+    max-width: 1170px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 2rem;
+}
+
+.cart-summary {
+    width: 90vw;
+    margin: 1.5rem auto;
+}
+
+@media screen and (min-width: 768px) {
+    .form-layout {
+        margin: 0 5vw;
+        width: calc(100vw - 360px);;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-column-gap: 2rem;
+        grid-row-gap: 2rem;
+    }
+    
+    .cart-summary {
+        width: auto;
+        position: absolute;
+        top: 117px;
+        right: 5vw;
+        max-width: 330px;
+    }
+}
+/* ---------------- end of cart summary ---------------- */
