@@ -2,7 +2,8 @@
 const cashRadioBtn = document.querySelector("#payment-cash");
 const cardRadioBtn = document.querySelector("#payment-card");
 const cardDOM = document.querySelector(".card");
-const cartInfo = document.querySelector(".cart-info");
+const checkoutInfo = document.querySelector(".checkout-info");
+const checkoutTotal = document.querySelector(".checkout-total"); 
 
 //payment method
 cardRadioBtn.addEventListener("click", () => {
@@ -24,7 +25,7 @@ cardRadioBtn.addEventListener("click", () => {
             <label for="card-ccv">Código de seguridad*</label><br>
             <input type="tel" name="card-ccv" maxlength="3" required>
         </div>
-        `
+        `;
     }
 });
 
@@ -34,8 +35,7 @@ cashRadioBtn.addEventListener("click", () => {
     } 
 });
 
-
-//cart info
+//checkout info
 let cartSummary = [];
 
 const getCartSummary = () => localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
@@ -54,7 +54,18 @@ const displayCartSummary = cartSummary => {
             <p>Cantidad: ${item.amount}</p>
         </div>
         `;
-        cartInfo.appendChild(div);
+        checkoutInfo.appendChild(div);
     }
 }
+
 displayCartSummary(cartSummary);
+
+const setCheckoutTotal = cartSummary => {
+    let tempTotal = 0;
+    cartSummary.map(item => {
+        tempTotal += item.price * item.amount;
+    });
+    checkoutTotal.innerText = tempTotal;
+}
+
+setCheckoutTotal(cartSummary);
