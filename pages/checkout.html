@@ -28,55 +28,81 @@
             <div class="form-layout">
                 <h1 style="margin: 1.5rem 0">Finalizar compra</h1>
             </div>
-            <form>
+            <form class="checkout-form form" id="form">
                 <div class="form-layout">
                     <!-- personal info -->
-                    <div class="personal-info">
+                    <div>
                         <h2 class="checkout-subtitle">Datos personales</h2>
-                        <div>
-                            <label for="email">Correo*</label><br>
-                            <input type="email" name="email" required>
+                        <div class="form-control">
+                            <label for="email">Correo*</label>
+                            <input type="email" name="email" id="email" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
+                        </div>
+                        <div class="form-control">
+                            <label for="name">Nombre*</label>
+                            <input type="text" name="name" id="name" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
+                        </div>
+                        <div class="form-control">
+                            <label for="lastname">Apellido*</label>
+                            <input type="text" name="lastname" id="lastname" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
+                        </div>
+                        <div class="form-control">
+                            <label for="dni">DNI*</label>
+                            <input type="tel" name="dni" placeholder="99999999" maxlength="8" id="dni" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
                         </div>
                         <div>
-                            <label for="name-lastname">Nombre y apellido*</label><br>
-                            <input type="text" name="name-lastname" required>
-                        </div>
-                        <div>
-                            <label for="dni">DNI*</label><br>
-                            <input type="tel" name="dni" placeholder="99999999" maxlength="8" required>
-                        </div>
-                        <div>
-                            <label for="prefix">Celular*</label><br>
-                            <div class="phone-number">
-                                <span style="margin-right: 0.5rem">0</span>
-                                <input type="tel" name="prefix" maxlength="4" style="width: 30%; margin-right: 0.5rem" required>
-                                <input type="tel" name="suffix" maxlength="10" required>
+                            <div class="form-control">
+                                <label for="phone">Celular*</label>
+                                <div class="phone-number">
+                                    <span style="margin-right: 0.5rem">15</span>
+                                    <input type="tel" name="phone" maxlength="10" id="phone" required>
+                                </div>
+                                <i class="fa-regular fa-circle-check"></i>
+                                <i class="fa-regular fa-circle-xmark"></i>
+                                <small>Error message</small>
                             </div>
                         </div>
                     </div>
                     <!-- end of personal info -->
                     <!-- shipping info -->
-                    <div class="shipping-info">
+                    <div>
                         <h2 class="checkout-subtitle">Envío</h2>
-                        <div>
-                            <label for="street">Calle*</label><br>
-                            <input type="text" name="street" required>
+                        <div class="form-control">
+                            <label for="street">Calle*</label>
+                            <input type="text" name="street" id="street" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
                         </div>
-                        <div>
-                            <label for="number">Número*</label><br>
-                            <input type="text" name="number" required>
+                        <div class="form-control">
+                            <label for="number">Número*</label>
+                            <input type="text" name="number" id="number" required>
+                            <i class="fa-regular fa-circle-check"></i>
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <small>Error message</small>
                         </div>
-                        <div>
-                            <label for="door">Piso / Puerta</label><br>
+                        <div class="form-control">
+                            <label for="door">Piso / Puerta</label>
                             <input type="text" name="door" placeholder="Ej. 4 A">
                         </div>
                     </div>
                     <!-- end of shipping info -->
                     <!-- payment method -->
-                    <div class="payment-method">
+                    <div>
                         <h2 class="checkout-subtitle">Método de pago</h2>
                         <div>
-                            <input type="radio" name="payment" id="payment-cash" value="cash">
+                            <input type="radio" name="payment" id="payment-cash" value="cash" checked>
                             <label for="payment-cash">Efectivo</label>
                         </div>
                         <div>
@@ -106,3 +132,12 @@
     <script src="../js/checkout.js"></script>
 </body>
 </html>
+
+<!-- 
+    Introduzca un correo electrónico válido, por favor.
+    Introduzca un nombre válido, por favor.
+    Introduzca un apellido válido, por favor.
+    Introduzca un documento válido, por favor.
+    Introduzca un celular válido, por favor.
+    Este campo es obligatorio.
+-->

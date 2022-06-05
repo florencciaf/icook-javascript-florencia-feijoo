@@ -1,13 +1,23 @@
-/* ---------------- form ---------------- */
-input[type=text], input[type=tel], input[type=email], input[type=month] {
-    width: 100%;
-    max-width: 100%;
-    border: 1px solid #c9c9c9;
-    height: 40px;
-    border-radius: 5px;
-    padding: 0 15px;
-    margin: 0.75rem 0;
-    font-family: "Open Sans", sans-serif;
+.form-control {
+	margin-bottom: 0.75rem;
+	padding-bottom: 1rem;
+	position: relative;
+}
+
+.form-control label {
+	display: inline-block;
+	margin-bottom: 0.5rem;
+}
+
+.form-control input {
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	display: block;
+	font-family: inherit;
+	font-size: 0.85rem;
+    margin-bottom: 0.15rem;
+	padding: 10px;
+	width: 100%;
 }
 
 input[type=radio] {
@@ -15,9 +25,54 @@ input[type=radio] {
     height: 16px;
 }
 
-input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[type=month]:focus {
-    box-shadow: 1.4px 0 var(--primaryColor);
+.form-control input:focus {
     outline: none;
+    box-shadow: 1.4px 0 var(--primaryColor);
+}
+
+.form-control.success input {
+	border-color: #2ecc71;
+}
+
+.form-control.success input:focus {
+	box-shadow: 1.4px 0 #2ecc71;
+}
+
+.form-control.error input {
+	border-color: #e74c3c;
+}
+
+.form-control.error input:focus {
+	box-shadow: 1.4px 0 #e74c3c;
+}
+
+.form-control i {
+	visibility: hidden;
+	position: absolute;
+	top: 42px;
+	right: 10px;
+}
+
+.form-control.success i.fa-circle-check {
+	color: #2ecc71;
+	visibility: visible;
+}
+
+.form-control.error i.fa-circle-xmark {
+	color: #e74c3c;
+	visibility: visible;
+}
+
+.form-control small {
+	color: #e74c3c;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	visibility: hidden;
+}
+
+.form-control.error small {
+	visibility: visible;
 }
 
 .checkout-subtitle {
@@ -30,9 +85,7 @@ input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[ty
     display: flex;
     align-items: center;
 }
-/* ---------------- end of ---------------- */
 
-/* ---------------- cart summary ---------------- */
 .form-layout {
     width: 90vw;
     margin: 0 auto;
@@ -40,7 +93,7 @@ input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[ty
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     grid-column-gap: 1.5rem;
-    grid-row-gap: 2rem;
+    grid-row-gap: 1.5rem;
 }
 
 .cart-summary {
@@ -51,11 +104,7 @@ input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[ty
 @media screen and (min-width: 768px) {
     .form-layout {
         margin: 0 5vw;
-        width: calc(100vw - 360px);;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        grid-column-gap: 2rem;
-        grid-row-gap: 2rem;
+        width: calc(100vw - 395px);
     }
     
     .cart-summary {
@@ -66,4 +115,3 @@ input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, input[ty
         max-width: 330px;
     }
 }
-/* ---------------- end of cart summary ---------------- */
