@@ -1,7 +1,11 @@
 //variables
+const inputs = [...document.querySelectorAll("input")]; 
 const cashRadioBtn = document.querySelector("#payment-cash");
 const cardRadioBtn = document.querySelector("#payment-card");
 const cardDOM = document.querySelector(".card");
+const houseRadioBtn = document.querySelector("#house");
+const flatRadioBtn = document.querySelector("#flat");
+const extraDOM = document.querySelector(".extra");
 const checkoutInfo = document.querySelector(".checkout-info");
 const checkoutTotal = document.querySelector(".checkout-total"); 
 const form = document.querySelector(".checkout-form");
@@ -14,7 +18,7 @@ const street = document.querySelector("#street");
 const streetNumber = document.querySelector("#number");
 
 
-//payment method
+//cash or card
 cardRadioBtn.addEventListener("click", () => {
     if (cardRadioBtn.checked) {
         cardDOM.innerHTML = `
@@ -51,6 +55,24 @@ cardRadioBtn.addEventListener("click", () => {
 cashRadioBtn.addEventListener("click", () => {
     if (cashRadioBtn.checked) {
         cardDOM.innerHTML = "";
+    } 
+});
+
+//house or flat
+flatRadioBtn.addEventListener("click", () => {
+    if (flatRadioBtn.checked) {
+        extraDOM.innerHTML = `
+        <div class="form-control">
+            <label for="door">Piso / Puerta</label>
+            <input type="text" name="door" maxlength="750" placeholder="Ej. 4 A">
+        </div>
+        `;
+    }
+});
+
+houseRadioBtn.addEventListener("click", () => {
+    if (houseRadioBtn.checked) {
+        extraDOM.innerHTML = "";
     } 
 });
 
@@ -97,7 +119,10 @@ form.addEventListener("submit", e => {
 	checkInputs();
 });
 
+
+
 const checkInputs = () => {
+    //variables
 	const emailValue = email.value.trim();
 	const firstnameValue = firstname.value.trim();
 	const lastnameValue = lastname.value.trim();
@@ -106,46 +131,65 @@ const checkInputs = () => {
     const streetValue = street.value.trim();
     const streetNumberValue = streetNumber.value.trim();
 
-    const pattern = new RegExp("^[A-Z]+$", "i");
+    //Regex
+    const lettersPattern = /^[A-ZÀ-Ú]+$/i;
+    const numbersPattern = /^[0-9]+$/;
 
-    if(emailValue === "") {
+    //input validation
+    if (emailValue === "") {
         setErrorFor(email, "Este campo es obligatorio.");
-    } else if(!isEmail(emailValue)) {
+    } else if (!isEmail(emailValue)) {
         setErrorFor(email, "Introduzca un email válido.");
     } else {
         setSuccessFor(email);
     }
 
-	if(firstnameValue === "") {
+	if (firstnameValue === "") {
 		setErrorFor(firstname, "Este campo es obligatorio.");
-	} else if(!pattern.test(firstnameValue)) {
+	} else if (!lettersPattern.test(firstnameValue)) {
         setErrorFor(firstname, "Introduzca un nombre válido.");
     } else {
 		setSuccessFor(firstname);
 	}
 
-    if(lastnameValue === "") {
+    if (lastnameValue === "") {
 		setErrorFor(lastname, "Este campo es obligatorio.");
-	} else if(!pattern.test(lastnameValue)) {
+	} else if (!lettersPattern.test(lastnameValue)) {
         setErrorFor(lastname, "Introduzca un apellido válido.");
     } else {
 		setSuccessFor(lastname);
 	}
 
-    if(dniValue === "") {
+    if (dniValue === "") {
         setErrorFor(dni, "Este campo es obligatorio.");
-    } else if((isNaN(dniValue)) || (dniValue.length < 6)) {
+    } else if ((!numbersPattern.test(dniValue)) || (dniValue.length < 6)) {
         setErrorFor(dni, "Introduzca un documento válido.");
     } else {
         setSuccessFor(dni);
     }
 
-    if(phoneValue === "") {
+    if (phoneValue === "") {
         setErrorForPhone(phone, "Este campo es obligatorio.");
-    } else if((isNaN(phoneValue)) || (phoneValue.length < 8)) {
+    } else if ((!numbersPattern.test(phoneValue)) || (phoneValue.length < 8)) {
         setErrorForPhone(phone, "Introduzca un celular válido.");
     } else {
         setSuccessForPhone(phone);
+    }
+
+    if (streetValue === "") {
+		setErrorFor(street, "Este campo es obligatorio.");
+	} else if (!lettersPattern.test(streetValue)) {
+        setErrorFor(street, "Introduzca una calle válida.");
+    } else {
+		setSuccessFor(street);
+	}
+
+    if (streetNumberValue === "") {
+        setErrorFor(streetNumber, "Este campo es obligatorio.");
+    } else if (!numbersPattern.test(streetNumberValue)) {
+        setErrorFor(streetNumber, "Introduzca un número válido.");
+    } else {
+        setSuccessFor(streetNumber);
     }
 }
 
@@ -173,6 +217,11 @@ const setSuccessForPhone = input => {
 	formControl.className = "form-control success";
 }
 	
-const isEmail = email => {
-	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-}
+const isEmail = email => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+
+
+inputs.forEach(input => {
+    input.addEventListener("focusout", () => {
+        checkInputs();
+    });
+});

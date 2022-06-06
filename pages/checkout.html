@@ -87,14 +87,19 @@
                         </div>
                         <div class="form-control">
                             <label for="number">Número*</label>
-                            <input type="text" name="number" id="number" required>
+                            <input type="text" name="number" maxlength="5" id="number" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
                         </div>
-                        <div class="form-control">
-                            <label for="door">Piso / Puerta</label>
-                            <input type="text" name="door" placeholder="Ej. 4 A">
+                        <div>
+                            <input type="radio" name="extra" id="house" value="house" checked>
+                            <label for="house">Casa</label>
+                            <input type="radio" name="extra" id="flat" value="flat">
+                            <label for="flat">Depto</label>
+                            <div class="extra" style="margin-top: 0.75rem">
+    
+                            </div>
                         </div>
                     </div>
                     <!-- end of shipping info -->
