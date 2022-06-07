@@ -35,28 +35,28 @@
                         <h2 class="checkout-subtitle">Datos personales</h2>
                         <div class="form-control">
                             <label for="email">Correo*</label>
-                            <input type="email" name="email" id="email" required>
+                            <input type="email" name="email" id="email" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
                         </div>
                         <div class="form-control">
-                            <label for="name">Nombre*</label>
-                            <input type="text" name="name" id="name" required>
+                            <label for="firstname">Nombre*</label>
+                            <input type="text" name="firstname" id="firstname" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
                         </div>
                         <div class="form-control">
                             <label for="lastname">Apellido*</label>
-                            <input type="text" name="lastname" id="lastname" required>
+                            <input type="text" name="lastname" id="lastname" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
                         </div>
                         <div class="form-control">
                             <label for="dni">DNI*</label>
-                            <input type="tel" name="dni" placeholder="99999999" maxlength="8" id="dni" required>
+                            <input type="tel" name="dni" placeholder="99999999" maxlength="8" id="dni" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
@@ -66,7 +66,7 @@
                                 <label for="phone">Celular*</label>
                                 <div class="phone-number">
                                     <span style="margin-right: 0.5rem">15</span>
-                                    <input type="tel" name="phone" maxlength="10" id="phone" required>
+                                    <input type="tel" name="phone" maxlength="10" id="phone" class="input" required>
                                 </div>
                                 <i class="fa-regular fa-circle-check"></i>
                                 <i class="fa-regular fa-circle-xmark"></i>
@@ -80,14 +80,14 @@
                         <h2 class="checkout-subtitle">Envío</h2>
                         <div class="form-control">
                             <label for="street">Calle*</label>
-                            <input type="text" name="street" id="street" required>
+                            <input type="text" name="street" id="street" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
                         </div>
                         <div class="form-control">
                             <label for="number">Número*</label>
-                            <input type="text" name="number" maxlength="5" id="number" required>
+                            <input type="text" name="number" maxlength="5" id="number" class="input" required>
                             <i class="fa-regular fa-circle-check"></i>
                             <i class="fa-regular fa-circle-xmark"></i>
                             <small>Error message</small>
@@ -127,7 +127,7 @@
 
                     </div>
                     <h3 style="margin-bottom: 1.5rem;">Total: <span class="checkout-total">0</span> USD</h3>
-                    <button type="submit" class="banner-btn" id="submit">Comprar</button>
+                    <button type="submit" class="banner-btn" id="submit-btn">Comprar</button>
                 </div>
                 <!-- end of checkout info -->
             </form>
