@@ -2,56 +2,56 @@
     {
         "id": 1, 
         "title": "Sushi salad", 
-        "price": 8, 
+        "price": 800, 
         "image": "https://i.ibb.co/HnN8PfR/product-1.jpg"
     },
 
     {
         "id": 2, 
         "title": "Pasta", 
-        "price": 4, 
+        "price": 400, 
         "image": "https://i.ibb.co/N9mmNnz/product-2.jpg"
     },
 
     {
         "id": 3, 
         "title": "Sopa", 
-        "price": 4, 
+        "price": 400, 
         "image": "https://i.ibb.co/d7Phvnf/product-3.jpg"
     },
 
     {
         "id": 4, 
         "title": "Avocado toast", 
-        "price": 6, 
+        "price": 600, 
         "image": "https://i.ibb.co/tbNgSD2/product-4.jpg"
     },
 
     {
         "id": 5, 
         "title": "Paella", 
-        "price": 8, 
+        "price": 800, 
         "image": "https://i.ibb.co/NmJDgbY/product-5.jpg"
     },
 
     {
         "id": 6, 
         "title": "Salmón rosado", 
-        "price": 8, 
+        "price": 800, 
         "image": "https://i.ibb.co/3FNGCJ2/product-6.jpg"
     },
 
     {
         "id": 7, 
         "title": "Ensalada", 
-        "price": 6, 
+        "price": 600, 
         "image": "https://i.ibb.co/dPJ7JCV/product-7.jpg"
     },
 
     {
         "id": 8, 
         "title": "Pizza", 
-        "price": 6, 
+        "price": 600, 
         "image": "https://i.ibb.co/nRbr0G3/product-8.jpg"
     }
 ]

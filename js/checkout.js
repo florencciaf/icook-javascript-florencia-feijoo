@@ -1,8 +1,5 @@
 //variables
 const inputs = [...document.querySelectorAll(".input")]; 
-const cashRadioBtn = document.querySelector("#payment-cash");
-const cardRadioBtn = document.querySelector("#payment-card");
-const cardDOM = document.querySelector(".card");
 const houseRadioBtn = document.querySelector("#house");
 const flatRadioBtn = document.querySelector("#flat");
 const extraDOM = document.querySelector(".extra");
@@ -52,89 +49,6 @@ const setCheckoutTotal = cartSummary => {
 
 setCheckoutTotal(cartSummary);
 
-//cash or card
-cardRadioBtn.addEventListener("click", () => {
-    if (cardRadioBtn.checked) {
-        cardDOM.innerHTML = `
-        <div class="form-control">
-            <label for="card-number">Número*</label>
-            <input type="tel" name="card-number" maxlength="30" id="card-number" class="card-input" required>
-            <i class="fa-regular fa-circle-check"></i>
-            <i class="fa-regular fa-circle-xmark"></i>
-            <small>Error message</small>
-        </div>
-        <div class="form-control">
-            <label for="card-name-lastname">Nombre y apellido*</label>
-            <input type="text" name="card-name-lastname" id="card-name-lastname" class="card-input" required>
-            <i class="fa-regular fa-circle-check"></i>
-            <i class="fa-regular fa-circle-xmark"></i>
-            <small>Error message</small>
-        </div>
-        <div class="form-control">
-            <label for="card-due-month">Fecha de vencimiento*</label>
-            <div class="flex"> 
-                <div style="width: 90%; margin-right: 0.5rem">
-                    <select name="card-due-month" id="card-due-month" class="card-input" required>
-                        <option value="MM">MM</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    <small>Error message</small>
-                </div>
-                <div style="width: 90%">
-                    <select name="card-due-year" id="card-due-year" class="card-input" required>
-                        <option value="AA">AA</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                        <option value="32">32</option>
-                        <option value="33">33</option>
-                        <option value="34">34</option>
-                        <option value="35">35</option>
-                        <option value="36">36</option>
-                        <option value="37">37</option>
-                        <option value="38">38</option>
-                        <option value="39">39</option>
-                        <option value="40">40</option>
-                    </select>
-                    <small>Error message</small>
-                </div>
-            </div>
-        </div>
-        <div class="form-control">
-            <label for="card-ccv">Código de seguridad*</label>
-            <input type="tel" name="card-ccv" maxlength="3" id="card-ccv" class="card-input" required>
-            <i class="fa-regular fa-circle-check"></i>
-            <i class="fa-regular fa-circle-xmark"></i>
-            <small>Error message</small>
-        </div>
-        `;
-    }
-});
-
-cashRadioBtn.addEventListener("click", () => {
-    if (cashRadioBtn.checked) {
-        cardDOM.innerHTML = "";
-    } 
-});
-
 //house or flat
 flatRadioBtn.addEventListener("click", () => {
     if (flatRadioBtn.checked) {
@@ -165,14 +79,12 @@ form.addEventListener("submit", e => {
 
     if (form.checkValidity()) {
         swal({
-            icon: "success",
-            title: "Compra realizada con éxito",
+            title: "Te estamos redirigiendo a Mercado Pago",
             text: "¡Gracias por elegirnos!",
             button: false
         }).then(setTimeout(() => {
-            location.href="../index.html"
+            mercadoPago();
         }, 3000));
-        localStorage.clear();
     }
 });
 
@@ -273,6 +185,10 @@ const checkInputs = input => {
     }
 }
 
+//validate email
+const isEmail = email => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+
+//success-error messages
 const setErrorFor = (input, message) => {
     const formControl = input.parentElement;
     const small = formControl.querySelector("small");
@@ -296,5 +212,36 @@ const setSuccessForPhone = input => {
     const formControl = input.parentElement.parentElement;
     formControl.className = "form-control success";
 }
-	
-const isEmail = email => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+
+//payment
+const mercadoPago = async () => {
+    const cartSummaryToMap = cartSummary.map(item => {
+        let newItem =     
+        {
+            title: item.title,
+            description: "",
+            picture_url: item.image,
+            category_id: item.id,
+            quantity: item.amount,
+            currency_id: "ARS",
+            unit_price: item.price
+        }
+        return newItem;
+    });
+
+    try {
+        let response = await fetch("https://api.mercadopago.com/checkout/preferences", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer TEST-6296233006857925-060821-f03fa770269b05fac825bb2edd76f32f-46022354"
+            },
+            body: JSON.stringify({
+                items: cartSummaryToMap
+            })
+        });
+        let data = await response.json();
+        window.open(data.init_point, "_blank");
+    } catch (error) {
+        console.log(error);
+    }
+}

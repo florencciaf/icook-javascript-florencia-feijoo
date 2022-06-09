@@ -43,7 +43,7 @@ const displayProducts = products => {
             </button>
         </div>
         <h3>${product.title}</h3>
-        <h4>${product.price} USD</h4>
+        <h4>$${product.price}</h4>
         `;
         productsDOM.appendChild(displayProducts);
     }
@@ -103,7 +103,7 @@ const addCartItem = item => {
     <img src="${item.image}" alt="Producto">
     <div>
         <h4>${item.title}</h4>
-        <h5>${item.price} USD</h5>
+        <h5>$${item.price}</h5>
         <span class="remove-item" data-id=${item.id}>Eliminar</span>
     </div>
     <div>
