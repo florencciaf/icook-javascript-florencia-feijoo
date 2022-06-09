@@ -9,7 +9,7 @@
 	margin-bottom: 0.5rem;
 }
 
-.form-control input {
+.form-control input, select {
 	border: 1px solid #c9c9c9;
 	border-radius: 5px;
 	display: block;
@@ -25,24 +25,24 @@ input[type=radio] {
     height: 16px;
 }
 
-.form-control input:focus {
+.form-control input:focus, select:focus {
     outline: none;
     box-shadow: 1.4px 0 var(--primaryColor);
 }
 
-.form-control.success input {
+.form-control.success input, .form-control.success select {
 	border-color: #2ecc71;
 }
 
-.form-control.success input:focus {
+.form-control.success input:focus, .form-control.success select:focus {
 	box-shadow: 1.4px 0 #2ecc71;
 }
 
-.form-control.error input {
+.form-control.error input, .form-control.error select {
 	border-color: #e74c3c;
 }
 
-.form-control.error input:focus {
+.form-control.error input:focus, .form-control.error select:focus {
 	box-shadow: 1.4px 0 #e74c3c;
 }
 
@@ -81,7 +81,7 @@ input[type=radio] {
     margin-bottom: 0.75rem;
 }
 
-.phone-number {
+.flex {
     display: flex;
     align-items: center;
 }

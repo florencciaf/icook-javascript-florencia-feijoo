@@ -16,8 +16,6 @@ const dni = document.querySelector("#dni");
 const phone = document.querySelector("#phone");
 const street = document.querySelector("#street");
 const number = document.querySelector("#number");
-const submitBtn = document.querySelector("#submit-btn");
-
 
 //checkout info
 let cartSummary = [];
@@ -60,26 +58,69 @@ cardRadioBtn.addEventListener("click", () => {
         cardDOM.innerHTML = `
         <div class="form-control">
             <label for="card-number">Número*</label>
-            <input type="tel" name="card-number" maxlength="30" class="input" required>
+            <input type="tel" name="card-number" maxlength="30" id="card-number" class="card-input" required>
             <i class="fa-regular fa-circle-check"></i>
             <i class="fa-regular fa-circle-xmark"></i>
             <small>Error message</small>
         </div>
         <div class="form-control">
             <label for="card-name-lastname">Nombre y apellido*</label>
-            <input type="text" name="card-name-lastname" class="input" required>
+            <input type="text" name="card-name-lastname" id="card-name-lastname" class="card-input" required>
             <i class="fa-regular fa-circle-check"></i>
             <i class="fa-regular fa-circle-xmark"></i>
             <small>Error message</small>
         </div>
         <div class="form-control">
-            <label for="card-due-date">Fecha de vencimiento*</label>
-            <input type="month" name="card-due-date" class="input" required>
-            <small>Error message</small>
+            <label for="card-due-month">Fecha de vencimiento*</label>
+            <div class="flex"> 
+                <div style="width: 90%; margin-right: 0.5rem">
+                    <select name="card-due-month" id="card-due-month" class="card-input" required>
+                        <option value="MM">MM</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <small>Error message</small>
+                </div>
+                <div style="width: 90%">
+                    <select name="card-due-year" id="card-due-year" class="card-input" required>
+                        <option value="AA">AA</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                        <option value="32">32</option>
+                        <option value="33">33</option>
+                        <option value="34">34</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                    </select>
+                    <small>Error message</small>
+                </div>
+            </div>
         </div>
         <div class="form-control">
             <label for="card-ccv">Código de seguridad*</label>
-            <input type="tel" name="card-ccv" maxlength="3" class="input" required>
+            <input type="tel" name="card-ccv" maxlength="3" id="card-ccv" class="card-input" required>
             <i class="fa-regular fa-circle-check"></i>
             <i class="fa-regular fa-circle-xmark"></i>
             <small>Error message</small>
@@ -117,9 +158,22 @@ form.noValidate = true;
 
 form.addEventListener("submit", e => {
 	e.preventDefault();	
+
 	inputs.forEach(input => {
         checkInputs(input);
     });
+
+    if (form.checkValidity()) {
+        swal({
+            icon: "success",
+            title: "Compra realizada con éxito",
+            text: "¡Gracias por elegirnos!",
+            button: false
+        }).then(setTimeout(() => {
+            location.href="../index.html"
+        }, 3000));
+        localStorage.clear();
+    }
 });
 
 inputs.forEach(input => {
@@ -212,7 +266,7 @@ const checkInputs = input => {
                 setSuccessFor(number);
             }
             break;
-        
+
         default: 
             console.log("Switch error");
             break;
