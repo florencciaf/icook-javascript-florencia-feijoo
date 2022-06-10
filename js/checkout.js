@@ -1,10 +1,10 @@
 //variables
 const inputs = [...document.querySelectorAll(".input")]; 
-const houseRadioBtn = document.querySelector("#house");
-const flatRadioBtn = document.querySelector("#flat");
-const extraDOM = document.querySelector(".extra");
 const checkoutInfo = document.querySelector(".checkout-info");
 const checkoutTotal = document.querySelector(".checkout-total"); 
+const houseRadioBtn = document.querySelector("#house");
+const flatRadioBtn = document.querySelector("#flat");
+const infoExtra = document.querySelector(".info-extra");
 const form = document.querySelector(".checkout-form");
 const email = document.querySelector("#email");
 const firstname = document.querySelector("#firstname");
@@ -29,7 +29,7 @@ const displayCartSummary = cartSummary => {
         <img src="${item.image}" alt="Producto">
         <div>
             <h4>${item.title}</h4>
-            <h5>${item.price} USD</h5>
+            <h5>$${item.price}</h5>
             <p>Cantidad: ${item.amount}</p>
         </div>
         `;
@@ -52,7 +52,7 @@ setCheckoutTotal(cartSummary);
 //house or flat
 flatRadioBtn.addEventListener("click", () => {
     if (flatRadioBtn.checked) {
-        extraDOM.innerHTML = `
+        infoExtra.innerHTML = `
         <div class="form-control">
             <label for="door">Piso / Puerta</label>
             <input type="text" name="door" maxlength="750" placeholder="Ej. 4 A">
@@ -63,7 +63,7 @@ flatRadioBtn.addEventListener("click", () => {
 
 houseRadioBtn.addEventListener("click", () => {
     if (houseRadioBtn.checked) {
-        extraDOM.innerHTML = "";
+        infoExtra.innerHTML = "";
     } 
 });
 
@@ -83,7 +83,7 @@ form.addEventListener("submit", e => {
             text: "¡Gracias por elegirnos!",
             button: false
         }).then(setTimeout(() => {
-            mercadoPago();
+            mercadopago();
         }, 3000));
     }
 });
@@ -155,7 +155,8 @@ const checkInputs = input => {
             } else if ((!numbersPattern.test(phoneValue)) || (phoneValue.length < 8)) {
                 setErrorForPhone(phone, "Introduzca un celular válido.");
             } else {
-                setSuccessForPhone(phone);
+                const formControl = phone.parentElement.parentElement;
+                formControl.className = "form-control success";
             }
             break;
 
@@ -208,13 +209,8 @@ const setErrorForPhone = (input, message) => {
     small.innerText = message;
 }
 
-const setSuccessForPhone = input => {
-    const formControl = input.parentElement.parentElement;
-    formControl.className = "form-control success";
-}
-
 //payment
-const mercadoPago = async () => {
+const mercadopago = async () => {
     const cartSummaryToMap = cartSummary.map(item => {
         let newItem =     
         {
@@ -236,11 +232,17 @@ const mercadoPago = async () => {
                 Authorization: "Bearer TEST-6296233006857925-060821-f03fa770269b05fac825bb2edd76f32f-46022354"
             },
             body: JSON.stringify({
-                items: cartSummaryToMap
+                items: cartSummaryToMap,
+                back_urls: {
+                    "success": "http://127.0.0.1:5500/index.html",
+                    "failure": "http://127.0.0.1:5500/index.html",
+                    "pending": "http://127.0.0.1:5500/index.html"
+                },
+                auto_return: "approved"
             })
         });
         let data = await response.json();
-        window.open(data.init_point, "_blank");
+        window.open(data.init_point, "_self");
     } catch (error) {
         console.log(error);
     }

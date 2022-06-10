@@ -27,16 +27,28 @@ body {
     width: 10px;
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #ccc;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #b3b3b3;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--mainWhite);
+    border-radius: 4px;
+    margin: 3px 0;
+}
+
+::-webkit-scrollbar-track:hover,
+::-webkit-scrollbar-track:active {
+  background: #e1e1e1;
 }
 /* ---------------- end of scroll bar ---------------- */
 
