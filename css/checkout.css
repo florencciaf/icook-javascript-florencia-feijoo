@@ -98,7 +98,7 @@ input[type=radio] {
 
 .cart-summary {
     width: 90vw;
-    margin: 1.5rem auto;
+    margin: 1.7rem auto;
 }
 
 @media screen and (min-width: 768px) {

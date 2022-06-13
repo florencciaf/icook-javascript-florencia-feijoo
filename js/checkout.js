@@ -14,12 +14,10 @@ const phone = document.querySelector("#phone");
 const street = document.querySelector("#street");
 const number = document.querySelector("#number");
 
-//checkout info
+//cart summary
 let cartSummary = [];
 
 const getCartSummary = () => localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-
-cartSummary = getCartSummary();
 
 const displayCartSummary = cartSummary => {
     for (const item of cartSummary) {
@@ -37,8 +35,6 @@ const displayCartSummary = cartSummary => {
     }
 }
 
-displayCartSummary(cartSummary);
-
 const setCheckoutTotal = cartSummary => {
     let tempTotal = 0;
     cartSummary.map(item => {
@@ -47,52 +43,56 @@ const setCheckoutTotal = cartSummary => {
     checkoutTotal.innerText = tempTotal;
 }
 
-setCheckoutTotal(cartSummary);
+const setupCheckout = () => {
+    cartSummary = getCartSummary();
+    displayCartSummary(cartSummary);
+    setCheckoutTotal(cartSummary);
+}
 
 //house or flat
-flatRadioBtn.addEventListener("click", () => {
-    if (flatRadioBtn.checked) {
-        infoExtra.innerHTML = `
-        <div class="form-control">
-            <label for="door">Piso / Puerta</label>
-            <input type="text" name="door" maxlength="750" placeholder="Ej. 4 A">
-        </div>
-        `;
-    }
-});
-
-houseRadioBtn.addEventListener("click", () => {
-    if (houseRadioBtn.checked) {
-        infoExtra.innerHTML = "";
-    } 
-});
-
-//validate form
-form.noValidate = true;
-
-form.addEventListener("submit", e => {
-	e.preventDefault();	
-
-	inputs.forEach(input => {
-        checkInputs(input);
+const shippingDOM = () => {
+    flatRadioBtn.addEventListener("click", () => {
+        if (flatRadioBtn.checked) {
+            infoExtra.innerHTML = `
+            <div class="form-control">
+                <label for="door">Piso / Puerta</label>
+                <input type="text" name="door" maxlength="750" placeholder="Ej. 4 A">
+            </div>
+            `;
+        }
     });
 
-    if (form.checkValidity()) {
-        swal({
-            title: "Te estamos redirigiendo a Mercado Pago",
-            text: "¡Gracias por elegirnos!",
-            button: false
-        }).then(setTimeout(() => {
-            mercadopago();
-        }, 3000));
-    }
-});
-
-inputs.forEach(input => {
-    input.addEventListener("blur", () => {
-        checkInputs(input);
+    houseRadioBtn.addEventListener("click", () => {
+        if (houseRadioBtn.checked) {
+            infoExtra.innerHTML = "";
+        } 
     });
-});
+}
+
+//check form validity
+const validateForm = () => {
+    form.noValidate = true;
+    form.addEventListener("submit", e => {
+        e.preventDefault();	
+        inputs.forEach(input => {
+            checkInputs(input);
+        });
+        if (form.checkValidity()) {
+            swal({
+                title: "Te estamos redirigiendo a Mercado Pago",
+                text: "¡Gracias por elegirnos!",
+                button: false
+            }).then(setTimeout(() => {
+                mercadopago();
+            }, 3000));
+        }
+    });
+    inputs.forEach(input => {
+        input.addEventListener("blur", () => {
+            checkInputs(input);
+        });
+    });
+}
 
 const checkInputs = input => {
     //variables
@@ -104,10 +104,11 @@ const checkInputs = input => {
     const streetValue = street.value.trim();
     const numberValue = number.value.trim();
 
-    //Regex
+    //regex
     const lettersPattern = /^[A-ZÀ-Ú]+$/i;
     const numbersPattern = /^[0-9]+$/;
 
+    //logic
     switch (input) {
         case email:
             if (emailValue === "") {
@@ -247,3 +248,8 @@ const mercadopago = async () => {
         console.log(error);
     }
 }
+
+//execution
+setupCheckout();
+shippingDOM();
+validateForm();
